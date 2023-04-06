@@ -24,6 +24,8 @@ inputCountry.addEventListener(
       .catch(error => {
         console.log(error);
         Notiflix.Notify.failure('Oops, there is no country with that name');
+        countriesList.innerHTML = '';
+        countriesInfo.innerHTML = '';
       });
   }, DEBOUNCE_DELAY)
 );
@@ -37,6 +39,7 @@ function handleInputCountriesValue(value) {
     countriesInfo.innerHTML = '';
   }
   if (value.length >= 2 && value.length <= 10) {
+    countriesInfo.innerHTML = '';
     const markup = value
       .map(el => {
         return `<li class="country-list__item">
@@ -55,9 +58,11 @@ function handleInputCountriesValue(value) {
     }" width="30"/>
         <p>${value[0].name.official}</p>
       </div>
-      <p><span>Capital: </span>${value[0].capital}</p>
-      <p><span>Population: </span>${value[0].population}</p>
-      <p><span>Languages: </span>${renderLanguages(value[0].languages)
+      <p><span class="field-name">Capital: </span>${value[0].capital}</p>
+      <p><span class="field-name">Population: </span>${value[0].population}</p>
+      <p><span class="field-name">Languages: </span>${renderLanguages(
+        value[0].languages
+      )
         .map(lang => `${lang}`)
         .join(', ')}</p>`;
     countriesInfo.innerHTML = markup;
