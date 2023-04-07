@@ -12,8 +12,7 @@ inputCountry.addEventListener(
   'input',
   debounce(event => {
     if (event.target.value.trim() === '') {
-      countriesList.innerHTML = '';
-      countriesInfo.innerHTML = '';
+      clearCountries();
       return;
     }
     fetchCountries(event.target.value)
@@ -24,8 +23,7 @@ inputCountry.addEventListener(
       .catch(error => {
         console.log(error);
         Notiflix.Notify.failure('Oops, there is no country with that name');
-        countriesList.innerHTML = '';
-        countriesInfo.innerHTML = '';
+        clearCountries();
       });
   }, DEBOUNCE_DELAY)
 );
@@ -35,8 +33,7 @@ function handleInputCountriesValue(value) {
     Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
     );
-    countriesList.innerHTML = '';
-    countriesInfo.innerHTML = '';
+    clearCountries();
   }
   if (value.length >= 2 && value.length <= 10) {
     countriesInfo.innerHTML = '';
@@ -72,4 +69,9 @@ function handleInputCountriesValue(value) {
 function renderLanguages(languages) {
   const langArr = Object.values(languages);
   return langArr;
+}
+
+function clearCountries() {
+  countriesList.innerHTML = '';
+  countriesInfo.innerHTML = '';
 }
